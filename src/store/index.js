@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-import AuthModule from './AuthModule';
+import AuthModule from './modules/AuthModule';
 
 const store = new Vuex.Store({
     modules: {
