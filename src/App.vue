@@ -1,60 +1,76 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+    <v-app>
+        <v-navigation-drawer app
+            absolute temporary
+        >
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+        </v-navigation-drawer>
 
-      <v-spacer></v-spacer>
+        <v-app-bar app
+          color="deep-purple accent-4"
+          dense
+          dark
+        >
+            <v-app-bar-nav-icon></v-app-bar-nav-icon>
+            <v-toolbar-title>Force messenger</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-items v-for="item in menuItems" v-bind:key="item.route">
+                <v-btn :to="item.route" text>
+                    <v-icon left>{{item.icon}}</v-icon>
+                    <div class="hidden-xs-only">{{ item.title }}</div>
+                </v-btn>
+            </v-toolbar-items>
+        </v-app-bar>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
 
-    <v-content>
-      <HelloWorld/>
-    </v-content>
-  </v-app>
+        <v-content app>
+            <transition name="fade" mode="out-in">
+                <router-view></router-view>
+            </transition>
+        </v-content>
+
+        <v-footer app>
+
+        </v-footer>
+    </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
 
 export default {
-  name: 'App',
+    name: 'App',
 
-  components: {
-    HelloWorld,
-  },
+    components: {
+    },
 
-  data: () => ({
-    //
-  }),
+    data () {
+        return {
+
+        }
+    },
+
+    computed: {
+        menuItems() {
+            const items = [
+                {title: 'Login', icon: 'mdi-account-arrow-right', route:'/login'},
+                {title: 'Register', icon: 'mdi-account-multiple-plus', route: '/register'}
+          ]
+          return items;
+        }
+    }
 };
 </script>
+
+<style lang="scss">
+    .fade-enter-active,
+    .fade-leave-active {
+        transition-duration: 0.3s;
+        transition-property: opacity;
+        transition-timing-function: ease;
+    }
+
+    .fade-enter,
+    .fade-leave-active {
+        opacity: 0
+    }
+</style>

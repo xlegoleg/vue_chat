@@ -3,13 +3,25 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+import AuthModule from './AuthModule';
+
+const store = new Vuex.Store({
+    modules: {
+        auth: AuthModule,
+    },
+    state: {
+        mainColor: "deep-purple accent-4"
+    },
+    getters: {
+        mainColor: (state) => {
+            return state.mainColor;
+        }
+    },
+    mutations: {
+    },
+    actions: {
+    },
+});
+
+
+export default store;
