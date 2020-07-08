@@ -1,14 +1,10 @@
 import * as firebase from "firebase";
 
-/**
- * firebase auth module
- * @type {firebase.auth.Auth}
- */
-const auth = firebase.auth();
-
 const AuthModule = {
     state: {
         isAuthorized: false,
+        userName: null,
+        userId: null,
         userEmail: null,
     },
     getters: {
@@ -18,19 +14,34 @@ const AuthModule = {
     },
     mutations: {
         LOGIN(state,payload) {
-            state.userEmail = payload;
             state.isAuthorized = true;
+            state.userName = payload.name;
+            state.userEmail = payload.email;
+            state.userId = payload.id;
         }
     },
     actions: {
         CREATE_NEW_USER({commit},payload) {
-            auth.createUserWithEmailAndPassword(payload.email, payload.password)
-                .then(() => {
-                    commit("LOGIN");
+            commit("SET_LOADING", true);
+            firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
+                .then((authData) => {
+                    firebase.database().ref('users').child(authData.user.uid).set({
+                        name: payload.username
+                    }).then(() => {
+                        const newUser = {
+                            id: authData.user.uid,
+                            name: payload.username,
+                            email: authData.user.email
+                        }
+                        commit("LOGIN", newUser);
+                        commit("SET_LOADING", false);
+                    }).catch((error) => {
+                        console.log(error);
+                    });
                 })
                 .catch((error) => {
                     console.log(error);
-                })
+                });
         }
     }
 }

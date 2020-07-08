@@ -10,7 +10,8 @@ const store = new Vuex.Store({
         auth: AuthModule,
     },
     state: {
-        mainColor: "deep-purple accent-4"
+        mainColor: "deep-purple accent-4",
+        loading: false
     },
     getters: {
         mainColor: (state) => {
@@ -18,6 +19,14 @@ const store = new Vuex.Store({
         }
     },
     mutations: {
+        /**
+         * Set loading state of app
+         * @param state {Object}
+         * @param payload {bool}
+         */
+        SET_LOADING(state, payload) {
+            state.loading = payload;
+        }
     },
     actions: {
     },

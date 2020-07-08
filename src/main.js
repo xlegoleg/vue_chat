@@ -11,6 +11,7 @@ new Vue({
   router,
   store,
   vuetify,
+  render: h => h(App),
   created() {
     firebase.initializeApp({
       apiKey: "AIzaSyB6OAOZ8meiEp0jExNU89KZnvz5gQu3wVU",
@@ -21,6 +22,5 @@ new Vue({
       messagingSenderId: "538481694263",
       appId: "1:538481694263:web:266a240eb8c8edebab11b2"
     })
-  },
-  render: h => h(App)
+  }
 }).$mount('#app')

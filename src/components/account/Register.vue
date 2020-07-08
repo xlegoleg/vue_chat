@@ -28,6 +28,15 @@
                                     label="Password"
                                     required
                                     :color="mainColor"
+                                    v-model="pass"
+                            >
+                            </v-text-field>
+                            <v-text-field
+                                    label="Repeat password"
+                                    required
+                                    :color="mainColor"
+                                    v-model="repeatedPass"
+                                    @change="checkPass"
                             >
                             </v-text-field>
                             <v-btn
@@ -52,13 +61,20 @@
 
         data() {
             return {
-
+                pass: null,
+                repeatedPass: null
             }
         },
 
         computed: {
             mainColor() {
                 return this.$store.getters.mainColor;
+            }
+        },
+
+        methods: {
+            checkPass(event) {
+                this.pass === event ? console.log('yes') : console.log('no');
             }
         }
     }
