@@ -14,9 +14,7 @@ const store = new Vuex.Store({
         loading: false
     },
     getters: {
-        mainColor: (state) => {
-            return state.mainColor;
-        }
+
     },
     mutations: {
         /**

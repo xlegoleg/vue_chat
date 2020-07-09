@@ -11,38 +11,48 @@
                 <v-card>
                     <v-card-title>Register chat account</v-card-title>
                     <v-container>
-                        <v-form>
+                        <v-form
+                                v-model="valid"
+                                @submit.prevent="submitForm"
+                        >
                             <v-text-field
+                                    v-model="name"
                                     label="Your nickname"
-                                    required
                                     :color="mainColor"
+                                    :rules="baseRules"
+                                    required
                             >
                             </v-text-field>
                             <v-text-field
+                                    v-model="email"
                                     label="E-mail"
-                                    required
                                     :color="mainColor"
+                                    :rules="emailRules"
+                                    required
                             >
                             </v-text-field>
                             <v-text-field
                                     label="Password"
-                                    required
                                     :color="mainColor"
                                     v-model="pass"
+                                    :rules ="baseRules"
+                                    required
                             >
                             </v-text-field>
                             <v-text-field
                                     label="Repeat password"
-                                    required
                                     :color="mainColor"
                                     v-model="repeatedPass"
-                                    @change="checkPass"
+                                    :rules="repeatedPassRules"
+                                    required
                             >
                             </v-text-field>
                             <v-btn
+                                    type="submit"
                                     block
                                     color="green"
-                                    dark
+                                    class="mt-6 white--text"
+                                    :disabled="!valid"
                             >
                                 confirm registration
                             </v-btn>
@@ -55,26 +65,50 @@
 </template>
 
 <script>
+    import {mapActions, mapState} from "vuex"
 
     export  default {
         name: 'Register',
 
         data() {
             return {
-                pass: null,
-                repeatedPass: null
+                valid: false,
+                name: '',
+                email: '',
+                pass: '',
+                repeatedPass: '',
+                baseRules: [
+                    v => v !== '' || "Required field",
+                    v => v.length >= 4 || "More 3 Symbols"
+                ],
+                emailRules: [
+                    v => !!v || 'Required field',
+                    v => /.+@.+/.test(v) || 'E-mail must be valid',
+                ],
+                repeatedPassRules: [
+                    v => !!v || 'Required field',
+                    v => v === this.pass || "Password mismatch"
+                ]
             }
         },
 
         computed: {
-            mainColor() {
-                return this.$store.getters.mainColor;
-            }
+            ...mapState({
+                mainColor: state => state.mainColor,
+            }),
+
         },
 
         methods: {
-            checkPass(event) {
-                this.pass === event ? console.log('yes') : console.log('no');
+            ...mapActions(["CREATE_NEW_USER"]),
+
+            submitForm() {
+                const user = {
+                    name: this.username,
+                    email: this.email,
+                    password: this.password
+                };
+                this.CREATE_NEW_USER(user);
             }
         }
     }

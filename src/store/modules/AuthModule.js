@@ -1,11 +1,24 @@
 import * as firebase from "firebase";
 
 const AuthModule = {
+
     state: {
         isAuthorized: false,
         userName: null,
         userId: null,
         userEmail: null,
+        baseRules: [
+            v => v !== '' || "Required field",
+            v => v.length >= 4 || "More 3 Symbols"
+        ],
+        emailRules: [
+            v => !!v || 'Required field',
+            v => /.+@.+/.test(v) || 'E-mail must be valid',
+        ],
+        repeatedPassRules: [
+            v => !!v || 'Required field',
+            v => v === this.pass || "Password mismatch"
+        ]
     },
     getters: {
         isAuthorized(state){
