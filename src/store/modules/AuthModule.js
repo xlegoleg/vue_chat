@@ -26,7 +26,7 @@ const AuthModule = {
         }
     },
     mutations: {
-        LOGIN(state,payload) {
+        LOGIN (state,payload) {
             state.isAuthorized = true;
             state.userName = payload.name;
             state.userEmail = payload.email;
@@ -34,7 +34,7 @@ const AuthModule = {
         }
     },
     actions: {
-        CREATE_NEW_USER({commit},payload) {
+        CREATE_NEW_USER ({commit},payload) {
             commit("SET_LOADING", true);
             firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
                 .then((authData) => {

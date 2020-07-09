@@ -65,7 +65,7 @@
 </template>
 
 <script>
-    import {mapActions, mapState} from "vuex"
+    import {mapState, mapActions} from "vuex"
 
     export  default {
         name: 'Register',
@@ -100,7 +100,9 @@
         },
 
         methods: {
-            ...mapActions(["CREATE_NEW_USER"]),
+            ...mapActions({
+                createNewUser: 'CREATE_NEW_USER'
+            }),
 
             submitForm() {
                 const user = {
@@ -108,7 +110,9 @@
                     email: this.email,
                     password: this.password
                 };
-                this.CREATE_NEW_USER(user);
+
+                this.createNewUser(user);
+                // this.$store.dispatch("CREATE_NEW_USER",user);
             }
         }
     }
