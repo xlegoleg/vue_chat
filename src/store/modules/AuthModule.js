@@ -13,12 +13,13 @@ const AuthModule = {
         ],
         emailRules: [
             v => !!v || 'Required field',
-            v => /.+@.+/.test(v) || 'E-mail must be valid',
+            v => !v || /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
         ],
-        repeatedPassRules: [
-            v => !!v || 'Required field',
-            v => v === this.pass || "Password mismatch"
-        ]
+        passRules: [
+            v => v !== '' || "Required field",
+            v => v.length >= 6 || "More 5 Symbols"
+        ],
+
     },
     getters: {
         isAuthorized(state){
@@ -34,6 +35,11 @@ const AuthModule = {
         }
     },
     actions: {
+        /**
+         * Create new user account and signed in
+         * @param commit {function}
+         * @param payload {Object}
+         */
         CREATE_NEW_USER ({commit},payload) {
             commit("SET_LOADING", true);
             firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
@@ -55,6 +61,30 @@ const AuthModule = {
                 .catch((error) => {
                     console.log(error);
                 });
+        },
+        /**
+         *
+         * @param commit {function}
+         * @param payload {Object}
+         */
+        AUTHORIZE_USER ({commit}, payload) {
+            commit("SET_LOADING", true);
+            firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
+                .then((authData) => {
+                    firebase.database().ref('users').child(authData.users.uid).once('value')
+                        .then((snapshot) => {
+                            commit("SET_LOADING", false);
+                            console.log(snapshot);
+                        })
+                        .catch((error) => {
+                            commit("SET_LOADING", true);
+                            console.log(error);
+                        })
+                })
+                .catch((error) => {
+                    commit("SET_LOADING", true);
+                    console.log(error);
+                })
         }
     }
 }

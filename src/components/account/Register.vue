@@ -35,7 +35,7 @@
                                     label="Password"
                                     :color="mainColor"
                                     v-model="pass"
-                                    :rules ="baseRules"
+                                    :rules ="passRules"
                                     required
                             >
                             </v-text-field>
@@ -77,14 +77,6 @@
                 email: '',
                 pass: '',
                 repeatedPass: '',
-                baseRules: [
-                    v => v !== '' || "Required field",
-                    v => v.length >= 4 || "More 3 Symbols"
-                ],
-                emailRules: [
-                    v => !!v || 'Required field',
-                    v => /.+@.+/.test(v) || 'E-mail must be valid',
-                ],
                 repeatedPassRules: [
                     v => !!v || 'Required field',
                     v => v === this.pass || "Password mismatch"
@@ -95,6 +87,9 @@
         computed: {
             ...mapState({
                 mainColor: state => state.mainColor,
+                baseRules: state => state.auth.baseRules,
+                passRules : state => state.auth.passRules,
+                emailRules : state => state.auth.emailRules
             }),
 
         },
@@ -106,9 +101,9 @@
 
             submitForm() {
                 const user = {
-                    name: this.username,
+                    username: this.name,
                     email: this.email,
-                    password: this.password
+                    password: this.pass
                 };
 
                 this.createNewUser(user);
