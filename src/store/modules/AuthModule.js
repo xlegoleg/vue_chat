@@ -4,9 +4,7 @@ const AuthModule = {
 
     state: {
         isAuthorized: false,
-        userName: null,
-        userId: null,
-        userEmail: null,
+        user: null,
         baseRules: [
             v => v !== '' || "Required field",
             v => v.length >= 4 || "More 3 Symbols"
@@ -29,9 +27,28 @@ const AuthModule = {
     mutations: {
         LOGIN (state,payload) {
             state.isAuthorized = true;
-            state.userName = payload.name;
-            state.userEmail = payload.email;
-            state.userId = payload.id;
+            state.user = payload;
+
+            const userListRef = firebase.database().ref('presence');
+            const myUserRef = userListRef.push();
+
+            firebase.database().ref('.info/connected')
+                .on(
+                    'value', function (snap) {
+                        if (snap.val()) {
+                            // if we lose network then remove this user from the list
+                            myUserRef.onDisconnect()
+                                .remove()
+                            // set user's online status
+                            let presenceObject = {user: payload, status: 'online'};
+                            myUserRef.set(presenceObject);
+                        } else {
+                            // client has lost network
+                            let presenceObject = {user: payload, status: 'offline'};
+                            myUserRef.set(presenceObject);
+                        }
+                    }
+                );
         }
     },
     actions: {
@@ -71,10 +88,15 @@ const AuthModule = {
             commit("SET_LOADING", true);
             firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
                 .then((authData) => {
-                    firebase.database().ref('users').child(authData.users.uid).once('value')
-                        .then((snapshot) => {
+                    firebase.database().ref('users').child(authData.user.uid).once('value')
+                        .then((data) => {
+                            const newUser = {
+                                id: authData.user.uid,
+                                name: data.val().name,
+                                email: authData.user.email
+                            }
+                            commit("LOGIN", newUser);
                             commit("SET_LOADING", false);
-                            console.log(snapshot);
                         })
                         .catch((error) => {
                             commit("SET_LOADING", true);

@@ -11,7 +11,10 @@
                 <v-card>
                     <v-card-title>Login chat</v-card-title>
                     <v-container>
-                        <v-form>
+                        <v-form
+                                v-model="valid"
+                                @submit.prevent="submitForm"
+                        >
                             <v-text-field
                                 label="E-mail"
                                 v-model="email"
@@ -28,6 +31,15 @@
                                 :color="mainColor"
                             >
                             </v-text-field>
+                            <v-btn
+                                    type="submit"
+                                    block
+                                    color="green"
+                                    class="mt-6 white--text"
+                                    :disabled="!valid"
+                            >
+                                confirm registration
+                            </v-btn>
                         </v-form>
                     </v-container>
                 </v-card>
@@ -46,6 +58,7 @@ export default {
 
     data() {
         return {
+            valid: false,
             email: '',
             pass: ''
         }
@@ -55,14 +68,33 @@ export default {
         ...mapState({
             mainColor: state => state.mainColor,
             passRules : state => state.auth.passRules,
-            emailRules : state => state.auth.emailRules
+            emailRules : state => state.auth.emailRules,
+            isAuthorized: state => state.auth.isAuthorized
         }),
+    },
+
+    watch: {
+        isAuthorized (value) {
+            if (value !== false) {
+                this.$router.push('/');
+            }
+        }
     },
 
     methods: {
         ...mapActions({
             authorizeUser: 'AUTHORIZE_USER'
-        })
+        }),
+
+        submitForm() {
+
+            const user = {
+                email: this.email,
+                password: this.pass
+            };
+
+            this.authorizeUser(user);
+        }
     }
 }
 </script>

@@ -1,24 +1,33 @@
 <template>
     <v-app>
-        <v-navigation-drawer app
-            absolute temporary
+        <v-navigation-drawer
+                app
+                absolute temporary
+                v-model="drawer"
         >
-
+            dsadsad
         </v-navigation-drawer>
 
-        <v-app-bar app
-          color="deep-purple accent-4"
-          dense
-          dark
+        <v-app-bar
+                app
+                color="deep-purple accent-4"
+                dense
+                dark
         >
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
             <v-toolbar-title>Force messenger</v-toolbar-title>
             <v-spacer></v-spacer>
+            <v-divider
+                    vertical
+            ></v-divider>
             <v-toolbar-items v-for="item in menuItems" v-bind:key="item.route">
                 <v-btn :to="item.route" text>
                     <v-icon left>{{item.icon}}</v-icon>
                     <div class="hidden-xs-only">{{ item.title }}</div>
                 </v-btn>
+                <v-divider
+                        vertical
+                ></v-divider>
             </v-toolbar-items>
         </v-app-bar>
 
@@ -45,7 +54,7 @@ export default {
 
     data () {
         return {
-
+            drawer: false
         }
     },
 
@@ -62,6 +71,9 @@ export default {
 </script>
 
 <style lang="scss">
+    .v-toolbar__content{
+        padding-right: 0 !important;
+    }
 
     .fade-enter-active,
     .fade-leave-active {
