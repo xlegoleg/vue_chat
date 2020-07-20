@@ -61,14 +61,22 @@
                 </v-card>
             </v-flex>
         </v-layout>
+
+        <Preload :loaderMessage="'Creating new account'"></Preload>
+
     </v-container>
 </template>
 
 <script>
     import {mapState, mapActions} from "vuex"
+    import Preload from '@/components/common/Preload'
 
     export  default {
         name: 'Register',
+
+        components: {
+            Preload
+        },
 
         data() {
             return {

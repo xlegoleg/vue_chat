@@ -41,6 +41,9 @@
                                 confirm registration
                             </v-btn>
                         </v-form>
+
+                        <Preload :loaderMessage="'Waiting for login'"></Preload>
+
                     </v-container>
                 </v-card>
             </v-flex>
@@ -50,11 +53,16 @@
 
 <script>
 
-import {mapState,mapActions} from 'vuex'
+import {mapState,mapActions} from 'vuex';
+import Preload from '@/components/common/Preload'
 
 export default {
 
     name: 'Login',
+
+    components: {
+        Preload
+    },
 
     data() {
         return {
