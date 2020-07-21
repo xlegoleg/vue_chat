@@ -5,9 +5,11 @@
     >
         <v-layout
                 row
+                align-center
+                justify-center
                 class="my-auto"
         >
-            <v-flex xs12 sm6 offset-sm3>
+            <v-flex xs10 sm6>
                 <v-card>
                     <v-card-title>Register chat account</v-card-title>
                     <v-container>
@@ -64,18 +66,22 @@
 
         <Preload :loaderMessage="'Creating new account'"></Preload>
 
+        <SuccessNotify :notifyMessage="'Registration Successful'"></SuccessNotify>
+
     </v-container>
 </template>
 
 <script>
-    import {mapState, mapActions} from "vuex"
-    import Preload from '@/components/common/Preload'
+    import {mapState, mapActions} from "vuex";
+    import Preload from '@/components/common/Preload';
+    import SuccessNotify from "@/components/common/SuccessNotify";
 
     export  default {
         name: 'Register',
 
         components: {
-            Preload
+            Preload,
+            SuccessNotify
         },
 
         data() {
@@ -97,14 +103,24 @@
                 mainColor: state => state.mainColor,
                 baseRules: state => state.auth.baseRules,
                 passRules : state => state.auth.passRules,
-                emailRules : state => state.auth.emailRules
+                emailRules : state => state.auth.emailRules,
+                isAuthorized: state => state.auth.isAuthorized
             }),
 
         },
 
+        watch: {
+            isAuthorized(value) {
+                if (value !== false) {
+                    this.goHome();
+                }
+            }
+        },
+
         methods: {
             ...mapActions({
-                createNewUser: 'CREATE_NEW_USER'
+                createNewUser: 'CREATE_NEW_USER',
+                showNotify: 'SHOW_NOTIFY'
             }),
 
             submitForm() {
@@ -115,7 +131,11 @@
                 };
 
                 this.createNewUser(user);
-                // this.$store.dispatch("CREATE_NEW_USER",user);
+            },
+
+            async goHome() {
+                await this.showNotify();
+                this.$router.push('/');
             }
         }
     }

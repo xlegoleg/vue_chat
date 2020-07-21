@@ -3,11 +3,13 @@
         class="d-flex"
         style="min-height: 100%"
     > 
-        <v-layout 
+        <v-layout
             row
+            align-center
+            justify-center
             class="my-auto"
         >
-            <v-flex xs12 sm6 offset-sm3>
+            <v-flex xs10 sm6 class="text-center">
                 <v-card>
                     <v-card-title>Login chat</v-card-title>
                     <v-container>
@@ -44,24 +46,28 @@
 
                         <Preload :loaderMessage="'Waiting for login'"></Preload>
 
+                        <SuccessNotify :notifyMessage="'Login Successful'"></SuccessNotify>
+
                     </v-container>
                 </v-card>
             </v-flex>
-        </v-layout>
+        </v-layout >
     </v-container>
 </template>
 
 <script>
 
 import {mapState,mapActions} from 'vuex';
-import Preload from '@/components/common/Preload'
+import Preload from '@/components/common/Preload';
+import SuccessNotify from "@/components/common/SuccessNotify";
 
 export default {
 
     name: 'Login',
 
     components: {
-        Preload
+        Preload,
+        SuccessNotify
     },
 
     data() {
@@ -84,14 +90,15 @@ export default {
     watch: {
         isAuthorized (value) {
             if (value !== false) {
-                this.$router.push('/');
+                this.goHome();
             }
         }
     },
 
     methods: {
         ...mapActions({
-            authorizeUser: 'AUTHORIZE_USER'
+            authorizeUser: 'AUTHORIZE_USER',
+            showNotify: 'SHOW_NOTIFY'
         }),
 
         submitForm() {
@@ -102,6 +109,11 @@ export default {
             };
 
             this.authorizeUser(user);
+        },
+
+        async goHome() {
+            await this.showNotify();
+            this.$router.push('/');
         }
     }
 }

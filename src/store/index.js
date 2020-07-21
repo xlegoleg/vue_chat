@@ -11,7 +11,9 @@ const store = new Vuex.Store({
     },
     state: {
         mainColor: "deep-purple accent-4",
-        loading: false
+        loading: false,
+        notify: false,
+        notifyTimeout: 1000
     },
     getters: {
 
@@ -24,9 +26,27 @@ const store = new Vuex.Store({
          */
         SET_LOADING(state, payload) {
             state.loading = payload;
+        },
+
+        /**
+         *
+         * @param state {Object}
+         * @param payload {bool}
+         */
+        SET_NOTIFY(state, payload){
+            state.notify = payload
         }
     },
     actions: {
+         SHOW_NOTIFY({commit,state}) {
+            commit('SET_NOTIFY', true);
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    commit('SET_NOTIFY', false);
+                    resolve();
+                }, state.notifyTimeout);
+            });
+        }
     },
 });
 
