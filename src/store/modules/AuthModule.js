@@ -80,11 +80,13 @@ const AuthModule = {
                 });
         },
         /**
-         *
+         * Authorize user
+         * @param state {Object}
+         * @param dispatch {function}
          * @param commit {function}
          * @param payload {Object}
          */
-        AUTHORIZE_USER ({commit}, payload) {
+        AUTHORIZE_USER ({commit,dispatch,state}, payload) {
             commit("SET_LOADING", true);
             firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
                 .then((authData) => {
@@ -98,14 +100,16 @@ const AuthModule = {
                             commit("LOGIN", newUser);
                             commit("SET_LOADING", false);
                         })
-                        .catch((error) => {
-                            commit("SET_LOADING", true);
-                            console.log(error);
+                        .catch(async (error) => {
+                            commit("SET_LOADING", false);
+                            state.errorMessage = error.message;
+                            await dispatch("SHOW_ERROR");
                         })
                 })
-                .catch((error) => {
-                    commit("SET_LOADING", true);
-                    console.log(error);
+                .catch(async (error) => {
+                    commit("SET_LOADING", false);
+                    commit("SET_ERROR_MESSAGE", error.message);
+                    await dispatch("SHOW_ERROR");
                 })
         }
     }

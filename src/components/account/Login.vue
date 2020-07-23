@@ -48,6 +48,8 @@
 
                         <SuccessNotify :notifyMessage="'Login Successful'"></SuccessNotify>
 
+                        <ErrorNotify :errorMessage="errorMessage"></ErrorNotify>
+
                     </v-container>
                 </v-card>
             </v-flex>
@@ -60,6 +62,7 @@
 import {mapState,mapActions} from 'vuex';
 import Preload from '@/components/common/Preload';
 import SuccessNotify from "@/components/common/SuccessNotify";
+import ErrorNotify from "@/components/common/ErrorNotify";
 
 export default {
 
@@ -67,7 +70,8 @@ export default {
 
     components: {
         Preload,
-        SuccessNotify
+        SuccessNotify,
+        ErrorNotify
     },
 
     data() {
@@ -83,7 +87,8 @@ export default {
             mainColor: state => state.mainColor,
             passRules : state => state.auth.passRules,
             emailRules : state => state.auth.emailRules,
-            isAuthorized: state => state.auth.isAuthorized
+            isAuthorized: state => state.auth.isAuthorized,
+            errorMessage: state => state.errorMessage
         }),
     },
 
