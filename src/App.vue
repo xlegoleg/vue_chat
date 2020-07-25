@@ -5,12 +5,13 @@
                 absolute temporary
                 v-model="drawer"
         >
-            dsadsad
+                <BaseDrawer :color="mainColor" v-if="!isAuthorized"></BaseDrawer>
+                <LoginDrawer :color="mainColor" v-else></LoginDrawer>
         </v-navigation-drawer>
 
         <v-app-bar
                 app
-                color="deep-purple accent-4"
+                :color="mainColor"
                 dense
                 dark
         >
@@ -32,7 +33,7 @@
         </v-app-bar>
 
 
-        <v-content app>
+        <v-content app >
             <transition name="fade" mode="out-in">
                 <router-view></router-view>
             </transition>
@@ -46,10 +47,16 @@
 
 <script>
 
+import {mapState} from 'vuex';
+import BaseDrawer from "@/components/drawer/BaseDrawer";
+import LoginDrawer from "@/components/drawer/LoginDrawer";
+
 export default {
     name: 'App',
 
     components: {
+        BaseDrawer,
+        LoginDrawer
     },
 
     data () {
@@ -59,6 +66,11 @@ export default {
     },
 
     computed: {
+        ...mapState({
+            mainColor: state => state.mainColor,
+            isAuthorized: state => state.auth.isAuthorized
+        }),
+
         menuItems() {
             const items = [
                 {title: 'Login', icon: 'mdi-account-arrow-right', route:'/login'},

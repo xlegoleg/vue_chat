@@ -1,7 +1,7 @@
 <template>
-    <v-container>
+    <v-container class="pa-0">
         <v-row>
-            <v-col
+            <v-col  class="chat-col"
                     lg="8"
                     offset-lg="2"
                     md="12"
@@ -28,8 +28,7 @@
 
 <style lang="scss">
     .container{
-        padding-top: 0px !important;
-        .col{
+        .chat-col{
             padding-top: 0px;
         }
     }
