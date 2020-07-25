@@ -7,7 +7,8 @@ const AuthModule = {
         user: null,
         baseRules: [
             v => v !== '' || "Required field",
-            v => v.length >= 4 || "More 3 Symbols"
+            v => v.length >= 4 || "More than 3 symbols",
+            v => v.length <= 12 || "Less than or equal 12 symbols"
         ],
         emailRules: [
             v => !!v || 'Required field',
@@ -15,7 +16,7 @@ const AuthModule = {
         ],
         passRules: [
             v => v !== '' || "Required field",
-            v => v.length >= 6 || "More 5 Symbols"
+            v => v.length >= 6 || "More than 5 symbols"
         ],
 
     },

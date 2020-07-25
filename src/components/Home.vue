@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="home">
         <Chat></Chat>
     </div>
 </template>
@@ -24,3 +24,11 @@ export default {
 
 }
 </script>
+
+<style lang="scss">
+
+    .home{
+        min-height: 100%;
+    }
+
+</style>

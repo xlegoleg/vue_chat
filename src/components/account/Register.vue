@@ -1,6 +1,6 @@
 <template>
     <v-container
-            class="d-flex"
+            class="d-flex pa-0"
             style="min-height: 100%"
     >
         <v-layout

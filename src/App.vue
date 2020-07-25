@@ -33,15 +33,17 @@
         </v-app-bar>
 
 
-        <v-content app >
+        <v-content
+                app
+        >
             <transition name="fade" mode="out-in">
                 <router-view></router-view>
             </transition>
         </v-content>
 
-        <v-footer app>
+<!--        <v-footer app>-->
 
-        </v-footer>
+<!--        </v-footer>-->
     </v-app>
 </template>
 

@@ -10,7 +10,7 @@
             </v-list-item-avatar>
 
             <v-list-item-content>
-                <v-list-item-title class="white--text">{{user.name}}</v-list-item-title>
+                <v-list-item-title class="grey--text">{{user.name}}</v-list-item-title>
             </v-list-item-content>
         </v-list-item>
         <template
@@ -65,7 +65,7 @@ export default {
 <style lang="scss">
 
     .list-header{
-        background-color: rgb(170, 170, 170);
+        background-color: #f2f2f2;
     }
 
 </style>
