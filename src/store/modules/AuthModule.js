@@ -23,6 +23,9 @@ const AuthModule = {
     getters: {
         isAuthorized(state){
             return state.isAuthorized;
+        },
+        userInfo(state){
+            return state.user;
         }
     },
     mutations: {

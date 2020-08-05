@@ -4,10 +4,12 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 import AuthModule from './modules/AuthModule';
+import ChatModule from './modules/ChatModule';
 
 const store = new Vuex.Store({
     modules: {
         auth: AuthModule,
+        chat: ChatModule
     },
     state: {
         mainColor: "deep-purple accent-4",

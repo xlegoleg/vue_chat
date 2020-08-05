@@ -21,15 +21,17 @@
             <v-divider
                     vertical
             ></v-divider>
-            <v-toolbar-items v-for="item in menuItems" v-bind:key="item.route">
-                <v-btn :to="item.route" text>
-                    <v-icon left>{{item.icon}}</v-icon>
-                    <div class="hidden-xs-only">{{ item.title }}</div>
-                </v-btn>
-                <v-divider
-                        vertical
-                ></v-divider>
-            </v-toolbar-items>
+            <template v-for="item in menuItems">
+                <v-toolbar-items v-if="item.state === isAuthorized" v-bind:key="item.route">
+                    <v-btn :to="item.route" text>
+                        <v-icon left>{{item.icon}}</v-icon>
+                        <div class="hidden-xs-only">{{ item.title }}</div>
+                    </v-btn>
+                    <v-divider
+                            vertical
+                    ></v-divider>
+                </v-toolbar-items>
+            </template>
         </v-app-bar>
 
 
@@ -75,8 +77,9 @@ export default {
 
         menuItems() {
             const items = [
-                {title: 'Login', icon: 'mdi-account-arrow-right', route:'/login'},
-                {title: 'Register', icon: 'mdi-account-multiple-plus', route: '/register'}
+                {title: 'Login', icon: 'mdi-account-arrow-right', route:'/login', state: false},
+                {title: 'Register', icon: 'mdi-account-multiple-plus', route: '/register', state: false},
+                {title: 'Logout', icon: 'mdi-account-arrow-left', route: '/login', state: true}
           ]
           return items;
         }
