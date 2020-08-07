@@ -36,6 +36,8 @@
         </ChatModal>
 
         <Preload :loaderMessage="'Loading resources'"></Preload>
+
+        <SuccessNotify></SuccessNotify>
     </v-container>
 </template>
 
@@ -43,6 +45,7 @@
 
 import ChatModal from '@/components/common/ChatModal';
 import Preload from '@/components/common/Preload';
+import SuccessNotify from "@/components/common/SuccessNotify";
 import {mapGetters,mapActions} from 'vuex';
 
 export default {
@@ -51,7 +54,8 @@ export default {
 
     components: {
         ChatModal,
-        Preload
+        Preload,
+        SuccessNotify
     },
 
     data() {
@@ -66,10 +70,6 @@ export default {
         }
     },
 
-    mounted() {
-        this.loadAllChats();
-    },
-
     computed: {
         ...mapGetters([
             'getAllChats'
@@ -79,7 +79,7 @@ export default {
     methods: {
 
         ...mapActions({
-            loadAllChats: 'LOAD_ALL_CHATS'
+
         }),
         /**
          * Card click handler

@@ -79,9 +79,11 @@
                 createChat: 'CREATE_CHAT'
             }),
 
-            createHandler() {
+            async createHandler() {
                 let chatName = this.chatName;
-                this.createChat(chatName)
+                this.chatName = '';
+                await this.createChat(chatName);
+                this.modalOpen = false;
             },
 
             joinHandler() {

@@ -6,7 +6,7 @@
             v-model="notify"
             :timeout="timeout"
     >
-        <div class="text-center" style="width: 100%">{{ notifyMessage || 'Success' }}</div>
+        <div class="text-center" style="width: 100%">{{ message || 'Success' }}</div>
 
     </v-snackbar>
 </template>
@@ -29,8 +29,13 @@
         computed: {
             ...mapState({
                 notify: state => state.notify,
-                timeout: state => state.notifyTimeout
-            })
+                timeout: state => state.notifyTimeout,
+                notification: state => state.notifyMessage
+            }),
+
+            message(){
+                return this.notifyMessage ? this.notifyMessage : this.notification;
+            }
         }
     }
 

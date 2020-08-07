@@ -17,6 +17,7 @@ const store = new Vuex.Store({
         notify: false,
         error: false,
         errorMessage: '',
+        notifyMessage: '',
         notifyTimeout: 1000
     },
     getters: {
@@ -39,6 +40,16 @@ const store = new Vuex.Store({
          */
         SET_NOTIFY(state, payload){
             state.notify = payload
+        },
+
+        /**
+         * Set notify message
+         * @param state {Object}
+         * @param payload {string}
+         * @constructor
+         */
+        SET_NOTIFY_MESSAGE(state,payload){
+            state.notifyMessage = payload;
         },
 
         /**
