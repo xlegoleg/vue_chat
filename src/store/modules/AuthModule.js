@@ -53,6 +53,18 @@ const AuthModule = {
                         }
                     }
                 );
+        },
+        LOGOUT (state) {
+            state.isAuthorized = false;
+            state.user = null;
+
+            firebase.auth().signOut()
+                .then(() => {
+                    console.log('logout')
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
         }
     },
     actions: {

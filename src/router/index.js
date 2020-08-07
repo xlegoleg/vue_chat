@@ -6,6 +6,7 @@ import CheckAuth from './CheckAuth';
 import Home from '@/components/Home';
 import Login from '@/components/account/Login';
 import Register from '@/components/account/Register';
+import Chat from '@/components/chat/Chat';
 
 Vue.use(VueRouter)
 
@@ -25,6 +26,13 @@ const routes = [
         path: '/Register',
         name: 'Register',
         component: Register
+    },
+    {
+        path: '/Chat/:id',
+        name: 'Chat',
+        component: Chat,
+        beforeEnter: CheckAuth,
+        props: true
     }
 ]
 

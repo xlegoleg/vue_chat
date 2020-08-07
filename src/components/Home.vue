@@ -34,19 +34,24 @@
 
 
         </ChatModal>
+
+        <Preload :loaderMessage="'Loading resources'"></Preload>
     </v-container>
 </template>
 
 <script>
 
-import ChatModal from '@/components/common/ChatModal'
+import ChatModal from '@/components/common/ChatModal';
+import Preload from '@/components/common/Preload';
+import {mapGetters,mapActions} from 'vuex';
 
 export default {
 
     name: 'Home',
 
     components: {
-        ChatModal
+        ChatModal,
+        Preload
     },
 
     data() {
@@ -61,7 +66,21 @@ export default {
         }
     },
 
+    mounted() {
+        this.loadAllChats();
+    },
+
+    computed: {
+        ...mapGetters([
+            'getAllChats'
+        ])
+    },
+
     methods: {
+
+        ...mapActions({
+            loadAllChats: 'LOAD_ALL_CHATS'
+        }),
         /**
          * Card click handler
          * @param e {Object}

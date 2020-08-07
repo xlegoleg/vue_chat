@@ -67,9 +67,6 @@
             ...mapState({
                 mainColor: state => state.mainColor
             }),
-            ...mapActions({
-                createChat: 'CREATE_CHAT'
-            }),
 
             modalOpen: {
                 get() {return this.modal},
@@ -78,9 +75,12 @@
         },
 
         methods: {
+            ...mapActions({
+                createChat: 'CREATE_CHAT'
+            }),
+
             createHandler() {
                 let chatName = this.chatName;
-                console.log(chatName);
                 this.createChat(chatName)
             },
 

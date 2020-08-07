@@ -23,7 +23,11 @@
             ></v-divider>
             <template v-for="item in menuItems">
                 <v-toolbar-items v-if="item.state === isAuthorized" v-bind:key="item.route">
-                    <v-btn :to="item.route" text>
+                    <v-btn
+                            :to="item.route"
+                            text
+                            @click="toolbarHandler($event,item.state)"
+                    >
                         <v-icon left>{{item.icon}}</v-icon>
                         <div class="hidden-xs-only">{{ item.title }}</div>
                     </v-btn>
@@ -51,7 +55,7 @@
 
 <script>
 
-import {mapState} from 'vuex';
+import {mapState, mapMutations} from 'vuex';
 import BaseDrawer from "@/components/drawer/BaseDrawer";
 import LoginDrawer from "@/components/drawer/LoginDrawer";
 
@@ -82,6 +86,18 @@ export default {
                 {title: 'Logout', icon: 'mdi-account-arrow-left', route: '/login', state: true}
           ]
           return items;
+        }
+    },
+
+    methods: {
+        ...mapMutations({
+            logOut: 'LOGOUT'
+        }),
+
+        toolbarHandler($event, state) {
+            if (state) {
+                this.logOut();
+            }
         }
     }
 };
