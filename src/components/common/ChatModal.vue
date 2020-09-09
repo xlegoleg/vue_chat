@@ -40,16 +40,25 @@
              </v-btn>
          </v-card-actions>
      </v-card>
+        <ErrorNotify></ErrorNotify>
+        <SuccessNotify></SuccessNotify>
     </v-dialog>
 </template>
 
 <script>
     import {mapState,mapActions} from 'vuex';
+    import ErrorNotify from "./ErrorNotify";
+    import SuccessNotify from "./SuccessNotify";
 
     export default {
         name: 'ChatModal',
-
+        components: {SuccessNotify, ErrorNotify},
         props: ['modal', 'cChat', 'jChat'],
+
+        comments: {
+            ErrorNotify,
+            SuccessNotify
+        },
 
         data() {
             return {
@@ -76,7 +85,8 @@
 
         methods: {
             ...mapActions({
-                createChat: 'CREATE_CHAT'
+                createChat: 'CREATE_CHAT',
+                joinChat: 'JOIN_CHAT'
             }),
 
             async createHandler() {
@@ -86,8 +96,11 @@
                 this.modalOpen = false;
             },
 
-            joinHandler() {
-
+            async joinHandler() {
+                let chatName = this.chatName;
+                this.chatName = '';
+                await this.joinChat(chatName)
+                this.modalOpen = false;
             }
         }
     }

@@ -6,7 +6,7 @@
             v-model="error"
             :timeout="timeout"
     >
-        <div class="text-center" style="width: 100%">{{ errorMessage || 'Error' }}</div>
+        <div class="text-center" style="width: 100%">{{ errorMessage || errMsg || 'Error' }}</div>
 
     </v-snackbar>
 </template>
@@ -29,6 +29,7 @@
         computed: {
             ...mapState({
                 error: state => state.error,
+                errMsg: state => state.errorMessage,
                 timeout: state => state.notifyTimeout
             })
         }

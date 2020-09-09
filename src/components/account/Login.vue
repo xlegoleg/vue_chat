@@ -40,7 +40,7 @@
                                     class="mt-6 white--text"
                                     :disabled="!valid"
                             >
-                                confirm registration
+                                sign in
                             </v-btn>
                         </v-form>
 

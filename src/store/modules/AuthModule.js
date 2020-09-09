@@ -114,6 +114,8 @@ const AuthModule = {
                                 email: authData.user.email
                             }
                             commit("LOGIN", newUser);
+                            window.sessionStorage.setItem('email', payload.email);
+                            window.sessionStorage.setItem('password', payload.password);
                             commit("SET_LOADING", false);
                         })
                         .catch(async (error) => {

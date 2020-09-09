@@ -16,7 +16,7 @@
                 dark
         >
             <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
-            <v-toolbar-title>Force messenger</v-toolbar-title>
+            <v-toolbar-title>Custom messenger</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-divider
                     vertical

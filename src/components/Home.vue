@@ -2,29 +2,50 @@
     <v-container
             class="d-flex home"
     >
-        <v-row
-                align-content="center"
+        <v-layout
+                row
+                align-center
+                justify-center
+                class="my-auto"
         >
-            <v-col
-                    v-for="(item, index) in items"
-                    :key="index"
-                    cols="12"
-                    sm="6"
-            >
+            <v-flex xs10 sm8 md6 class="text-center">
                 <v-card
-                        :ripple="{center: true, class: 'purple--text text--darken-4'}"
-                        class="home-card d-flex flex-column align-center justify-center"
-                        @click="clickHandler($event,    item.callback)"
+                        class="home-panel"
                 >
-                    <div
-                            class="home-card__round d-flex align-center justify-center"
+                    <v-card-title
+                            class="deep-purple accent-4 white--text"
                     >
-                        <v-icon>{{item.icon}}</v-icon>
-                    </div>
-                    <h3>{{item.title}}</h3>
+                        Actions
+                    </v-card-title>
+                    <v-card-text>
+                        <v-row
+                                align-content="center"
+                        >
+                            <v-col
+                                    v-for="(item, index) in items"
+                                    :key="index"
+                                    cols="12"
+                                    sm="6"
+                            >
+                                <v-card
+                                        :ripple="{center: true, class: 'purple--text text--darken-4'}"
+                                        class="home-card d-flex flex-column align-center justify-center"
+                                        @click="clickHandler($event,    item.callback)"
+                                >
+                                    <div
+                                            class="home-card__round d-flex align-center justify-center"
+                                    >
+                                        <v-icon>{{item.icon}}</v-icon>
+                                    </div>
+                                    <h3>{{item.title}}</h3>
+                                </v-card>
+                            </v-col>
+                        </v-row>
+                    </v-card-text>
                 </v-card>
-            </v-col>
-        </v-row>
+            </v-flex>
+        </v-layout>
+
         <ChatModal
                 :modal="modal"
                 :cChat="cChat"
@@ -70,6 +91,10 @@ export default {
         }
     },
 
+    mounted() {
+      this.loadAllChats();
+    },
+
     computed: {
         ...mapGetters([
             'getAllChats'
@@ -79,7 +104,7 @@ export default {
     methods: {
 
         ...mapActions({
-
+            loadAllChats: 'LOAD_ALL_CHATS'
         }),
         /**
          * Card click handler
@@ -108,7 +133,7 @@ export default {
 <style lang="scss">
 
     .home{
-        min-height: 100%;
+        margin-top: 50px;
         &-card{
             height: 180px;
             transition: all 0.2s ease-in;
