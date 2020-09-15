@@ -68,13 +68,23 @@
             }
         },
 
+        watch: {
+            currentChat: function (val) {
+                if (val) {
+                    console.log(val);
+                    this.goToChat(val);
+                }
+            }
+        },
+
         mounted() {
             this.open = this.modal;
         },
 
         computed: {
             ...mapState({
-                mainColor: state => state.mainColor
+                mainColor: state => state.mainColor,
+                currentChat: state => state.chat.currentChat
             }),
 
             modalOpen: {
@@ -101,6 +111,12 @@
                 this.chatName = '';
                 await this.joinChat(chatName)
                 this.modalOpen = false;
+            },
+
+            goToChat(chatId) {
+                this.$router.push({
+                    path: `/chat/${chatId}`,
+                })
             }
         }
     }

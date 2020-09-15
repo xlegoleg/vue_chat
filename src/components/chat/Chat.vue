@@ -5,7 +5,7 @@
         <v-row>
             <v-col  class="chat-col pa-0"
                     lg="10"
-                    offset-lg="2"
+                    offset-lg="1"
                     md="12"
             >
                 <div class="chat-window"
